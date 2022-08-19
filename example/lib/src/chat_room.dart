@@ -18,10 +18,14 @@ class _ChatRoomState extends State<ChatRoom> {
 
   String get roomId => widget.room.id;
   late PreabMessage preabMessage = PreabMessage(roomId);
+  late RoomModel roomModel;
 
   @override
   void initState() {
-    messageManager.execute(() => preabMessage.getInitialMessage()).then((value) {
+    messageManager.execute(() async {
+      roomModel = await PreabRoom.instance.getOneRoom(roomId);
+      return preabMessage.getInitialMessage();
+    }).then((value) {
       preabMessage.listen((message) {
         var data = messageManager.data!;
         data.insert(0, message);

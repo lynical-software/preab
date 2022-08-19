@@ -1,5 +1,4 @@
 import 'package:pocketbase/pocketbase.dart';
-import 'package:preab/src/model/preab_user.dart';
 
 import '../constant/exception.dart';
 
@@ -17,12 +16,7 @@ class PreabClient {
     return _pocketBase!;
   }
 
-  static void init<T>({
-    required String url,
-    required PreabUser user,
-    required String token,
-  }) {
-    _pocketBase = PocketBase(url);
-    _pocketBase!.authStore.save(token, user);
+  static void init<T>({required PocketBase pocketBase}) {
+    _pocketBase = pocketBase;
   }
 }

@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart';
+import 'package:preab_example/main.dart';
+import 'package:preab_example/src/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
 class SignInPage extends StatefulWidget {
@@ -39,7 +45,20 @@ class _SignInPageState extends State<SignInPage> {
                 decoration: const InputDecoration(labelText: "Password"),
               ),
               SuraAsyncButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    UserAuth auth = await pocketBase.users.authViaEmail(
+                      emailTC.text.trim(),
+                      passwordTC.text.trim(),
+                    );
+                    var spf = await SharedPreferences.getInstance();
+                    spf.setString("token", pocketBase.authStore.token);
+                    spf.setString("user", jsonEncode(auth.user!.toJson()));
+                    SuraPageNavigator.pushAndRemove(context, const HomePage());
+                  } on ClientException catch (e) {
+                    showSuraSimpleDialog(context, e.response['message']);
+                  }
+                },
                 child: const Text("Sign In"),
               ),
             ],

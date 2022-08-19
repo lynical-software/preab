@@ -1,3 +1,4 @@
+import 'package:pocketbase/pocketbase.dart';
 import 'package:preab/preab.dart';
 import 'package:preab/src/constant/collection_name.dart';
 import 'package:preab/src/services/preab_auth.dart';
@@ -28,17 +29,17 @@ class PreabMessage {
   }
 
   Future<ChatMessageModel> sendMessage(String message) async {
-    var roomRecord = await PreabClient.client.records.getOne(roomCollection, roomId);
-    RoomModel roomModel = RoomModel.fromJson(roomRecord.toJson());
-    String receiver = roomModel.users.firstWhere((element) => element != PreabAuth.me.id);
+    RoomModel roomModel = await PreabRoom.instance.getOneRoom(roomId);
+    RecordModel receiver = roomModel.users.firstWhere((element) => element.id != PreabAuth.me);
+
     var record = await PreabClient.client.records.create(
       messageCollection,
       body: ChatMessageModel(
         id: "id",
         message: message,
-        receiver: receiver,
+        receiver: receiver.id,
         room: roomId,
-        sender: PreabAuth.me.id,
+        sender: PreabAuth.me,
       ).toJson(),
     );
     return ChatMessageModel.fromJson(record.toJson());

@@ -1,17 +1,17 @@
+import 'package:pocketbase/pocketbase.dart';
 import 'package:preab/src/client/preab_client.dart';
 
 import '../constant/exception.dart';
-import '../model/preab_user.dart';
 
 class PreabAuth {
-  static PreabUser get me {
-    var user = PreabClient.client.authStore.model as PreabUser?;
+  static String get me {
+    var user = PreabClient.client.authStore.model as UserModel?;
     if (user == null) {
       throw PreabException(
         PreabExceptionType.user,
         "User haven't authenticated your user yet",
       );
     }
-    return user;
+    return user.profile!.id;
   }
 }
