@@ -5,7 +5,7 @@ import '../constant/exception.dart';
 class PreabClient {
   static PocketBase? _pocketBase;
 
-  static String? _userId;
+  static String? _profileId;
 
   static PocketBase get client {
     assert(_pocketBase != null);
@@ -18,15 +18,15 @@ class PreabClient {
     return _pocketBase!;
   }
 
-  static String get userId {
-    assert(_userId != null);
-    if (_userId == null) {
+  static String get profileId {
+    assert(_profileId != null);
+    if (_profileId == null) {
       throw PreabException(
         PreabExceptionType.user,
         "Please call PreabClient.init to initialize PocketBase",
       );
     }
-    return _userId!;
+    return _profileId!;
   }
 
   static Future<void> init<T>({
@@ -40,7 +40,7 @@ class PreabClient {
         throw PreabException(PreabExceptionType.user, "profile not found");
       }
       await _pocketBase!.records.getOne("profiles", user.profile?.id ?? "");
-      _userId = user.profile!.id;
+      _profileId = user.profile!.id;
       _pocketBase!.authStore.save(token, user);
     } on ClientException catch (e) {
       throw e.response['message'];

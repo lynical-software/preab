@@ -9,12 +9,12 @@ class ChatMessageModel {
     this.updated,
   });
 
-  final DateTime? created;
   final String id;
   final String message;
   final String receiver;
   final String room;
   final String sender;
+  final DateTime? created;
   final DateTime? updated;
 
   ChatMessageModel copyWith({

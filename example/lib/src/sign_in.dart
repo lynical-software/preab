@@ -47,12 +47,13 @@ class _SignInPageState extends State<SignInPage> {
               SuraAsyncButton(
                 onPressed: () async {
                   try {
+                    var pocketBase = PocketBase(url);
                     UserAuth auth = await pocketBase.users.authViaEmail(
                       emailTC.text.trim(),
                       passwordTC.text.trim(),
                     );
                     var spf = await SharedPreferences.getInstance();
-                    spf.setString("token", pocketBase.authStore.token);
+                    spf.setString("token", auth.token);
                     spf.setString("user", jsonEncode(auth.user!.toJson()));
                     SuraPageNavigator.pushAndRemove(
                       context,

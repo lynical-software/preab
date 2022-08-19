@@ -1,4 +1,3 @@
-import 'package:pocketbase/pocketbase.dart';
 import 'package:preab/preab.dart';
 import 'package:preab/src/constant/collection_name.dart';
 
@@ -29,7 +28,7 @@ class PreabMessage {
 
   Future<ChatMessageModel> sendMessage(String message) async {
     RoomModel roomModel = await PreabRoom.instance.getOneRoom(roomId);
-    RecordModel receiver = roomModel.users.firstWhere((element) => element.id != PreabClient.userId);
+    PreabProfile receiver = roomModel.users.firstWhere((element) => element.id != PreabClient.profileId);
 
     var record = await PreabClient.client.records.create(
       messageCollection,
@@ -38,7 +37,7 @@ class PreabMessage {
         message: message,
         receiver: receiver.id,
         room: roomId,
-        sender: PreabClient.userId,
+        sender: PreabClient.profileId,
       ).toJson(),
     );
     return ChatMessageModel.fromJson(record.toJson());

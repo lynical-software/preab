@@ -1,10 +1,8 @@
-import 'package:pocketbase/pocketbase.dart';
-
 import '../../preab.dart';
 
 extension RoomX on RoomModel {
   String get roomName {
-    return users.firstWhere((element) => element.id != PreabClient.userId).id;
+    return users.firstWhere((element) => element.id != PreabClient.profileId).id;
   }
 }
 
@@ -21,14 +19,14 @@ class RoomModel {
   final String name;
   final DateTime? updated;
   final DateTime? created;
-  final List<RecordModel> users;
+  final List<PreabProfile> users;
 
   RoomModel copyWith({
     String? id,
     String? name,
     DateTime? updated,
     DateTime? created,
-    List<RecordModel>? users,
+    List<PreabProfile>? users,
   }) {
     return RoomModel(
       id: id ?? this.id,
@@ -47,9 +45,9 @@ class RoomModel {
       created: json["created"] == null ? null : DateTime.parse(json["created"]),
       users: json["@expand"]['users'] == null
           ? []
-          : List<RecordModel>.from(
+          : List<PreabProfile>.from(
               json["@expand"]['users'].map(
-                (x) => RecordModel.fromJson(x),
+                (x) => PreabProfile.fromJson(x),
               ),
             ),
     );
