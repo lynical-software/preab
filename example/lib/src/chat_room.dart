@@ -45,7 +45,9 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(roomId)),
+      appBar: AppBar(
+        title: Text(widget.room.roomName),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

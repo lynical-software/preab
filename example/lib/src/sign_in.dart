@@ -54,7 +54,10 @@ class _SignInPageState extends State<SignInPage> {
                     var spf = await SharedPreferences.getInstance();
                     spf.setString("token", pocketBase.authStore.token);
                     spf.setString("user", jsonEncode(auth.user!.toJson()));
-                    SuraPageNavigator.pushAndRemove(context, const HomePage());
+                    SuraPageNavigator.pushAndRemove(
+                      context,
+                      const HomePage(),
+                    );
                   } on ClientException catch (e) {
                     showSuraSimpleDialog(context, e.response['message']);
                   }

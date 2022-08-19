@@ -1,9 +1,10 @@
 import 'package:pocketbase/pocketbase.dart';
-import 'package:preab/src/services/preab_auth.dart';
+
+import '../../preab.dart';
 
 extension RoomX on RoomModel {
   String get roomName {
-    return users.firstWhere((element) => element.id != PreabAuth.me).id;
+    return users.firstWhere((element) => element.id != PreabClient.userId).id;
   }
 }
 

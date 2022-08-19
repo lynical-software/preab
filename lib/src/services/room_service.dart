@@ -1,8 +1,6 @@
 import 'package:preab/preab.dart';
 import 'package:preab/src/constant/collection_name.dart';
 
-import 'preab_auth.dart';
-
 class PreabRoom {
   PreabRoom._privateConstructor();
 
@@ -14,7 +12,7 @@ class PreabRoom {
   }) async {
     var response = await PreabClient.client.records.getList(
       "rooms",
-      filter: 'users ~ "${PreabAuth.me}"',
+      filter: 'users ~ "${PreabClient.userId}"',
       page: page,
       perPage: limit,
       query: {
@@ -31,7 +29,7 @@ class PreabRoom {
       body: {
         "name": roomName,
         "users": [
-          PreabAuth.me,
+          PreabClient.userId,
           otherId,
         ],
       },

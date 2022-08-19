@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:future_manager/future_manager.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:sura_flutter/sura_flutter.dart';
 
 import 'src/splash.dart';
 
@@ -17,13 +19,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Preab Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return FutureManagerProvider(
+      onFutureManagerError: (err, context) {
+        errorLog(err.stackTrace);
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Preab Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const SplashScreenPage(),
       ),
-      home: const SplashScreenPage(),
     );
   }
 }

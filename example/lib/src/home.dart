@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:future_manager/future_manager.dart';
 import 'package:preab/preab.dart';
 import 'package:preab_example/src/chat_room.dart';
+import 'package:preab_example/src/init.dart';
 import 'package:preab_example/src/sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sura_flutter/sura_flutter.dart';
-
-import '../main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,8 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    PreabClient.init(pocketBase: pocketBase);
     roomManager.execute(() async {
+      await init();
       return PreabRoom.instance.getAllRooms();
     });
     super.initState();
