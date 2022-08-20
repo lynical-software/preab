@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:future_manager/future_manager.dart';
-import 'package:preab_example/src/home.dart';
-import 'package:preab_example/src/sign_in.dart';
+import 'package:preab_example/src/auth/sign_in.dart';
+import 'package:preab_example/src/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 

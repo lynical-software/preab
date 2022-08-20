@@ -1,3 +1,20 @@
+import 'package:preab/preab.dart';
+import 'package:preab/src/constant/collection_name.dart';
+
+extension ChatMessageModelX on ChatMessageModel {
+  bool get hasAttachment {
+    return attachment != null && attachment!.isNotEmpty;
+  }
+
+  bool get isMyMessage {
+    return sender == PreabClient.profileId;
+  }
+
+  String get fullUrl {
+    return "${PreabClient.client.baseUrl}/api/files/$messageCollection/$id/$attachment";
+  }
+}
+
 class ChatMessageModel {
   ChatMessageModel({
     required this.id,
@@ -7,6 +24,7 @@ class ChatMessageModel {
     required this.sender,
     this.created,
     this.updated,
+    this.attachment,
   });
 
   final String id;
@@ -16,6 +34,7 @@ class ChatMessageModel {
   final String sender;
   final DateTime? created;
   final DateTime? updated;
+  final String? attachment;
 
   ChatMessageModel copyWith({
     DateTime? created,
@@ -45,6 +64,7 @@ class ChatMessageModel {
       receiver: json["receiver"] ?? "",
       room: json["room"] ?? "",
       sender: json["sender"] ?? "",
+      attachment: json["attachment"],
       updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
     );
   }

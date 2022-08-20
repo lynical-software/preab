@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:preab_example/main.dart';
-import 'package:preab_example/src/home.dart';
+import 'package:preab_example/src/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sura_flutter/sura_flutter.dart';
+
+import '../home/home.dart';
+import 'init.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);

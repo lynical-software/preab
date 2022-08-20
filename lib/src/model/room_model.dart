@@ -4,6 +4,10 @@ extension RoomX on RoomModel {
   String get roomName {
     return users.firstWhere((element) => element.id != PreabClient.profileId).id;
   }
+
+  PreabProfile get otherUser {
+    return users.firstWhere((element) => element.id != PreabClient.profileId);
+  }
 }
 
 class RoomModel {
@@ -11,6 +15,7 @@ class RoomModel {
     required this.id,
     required this.name,
     required this.users,
+    required this.lastMessage,
     this.updated,
     this.created,
   });
@@ -20,10 +25,12 @@ class RoomModel {
   final DateTime? updated;
   final DateTime? created;
   final List<PreabProfile> users;
+  final String? lastMessage;
 
   RoomModel copyWith({
     String? id,
     String? name,
+    String? lastMessage,
     DateTime? updated,
     DateTime? created,
     List<PreabProfile>? users,
@@ -34,6 +41,7 @@ class RoomModel {
       updated: updated ?? this.updated,
       created: created ?? this.created,
       users: users ?? this.users,
+      lastMessage: lastMessage ?? this.lastMessage,
     );
   }
 
@@ -50,6 +58,7 @@ class RoomModel {
                 (x) => PreabProfile.fromJson(x),
               ),
             ),
+      lastMessage: json['last_message'] ?? "",
     );
   }
 

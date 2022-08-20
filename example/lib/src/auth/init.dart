@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:pocketbase/pocketbase.dart';
 import 'package:preab/preab.dart';
-import 'package:preab_example/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+const url = false ? "http://127.0.0.1:8090" : "https://pocketbase.lynical.com";
 
 Future init() async {
   var spf = await SharedPreferences.getInstance();

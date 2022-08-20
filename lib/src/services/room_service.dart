@@ -24,7 +24,7 @@ class PreabRoom {
       page: page,
       perPage: limit,
       query: {
-        "expand": "users",
+        "expand": "users,last_message",
       },
       sort: "-updated",
     );
@@ -37,10 +37,12 @@ class PreabRoom {
     if (exist != null) {
       return exist;
     }
+
     var record = await PreabClient.client.records.create(
       roomCollection,
       body: {
         "name": roomName,
+        "last_message": "",
         "users": [
           PreabClient.profileId,
           otherId,
@@ -55,7 +57,7 @@ class PreabRoom {
       roomCollection,
       roomId,
       query: {
-        "expand": "users",
+        "expand": "users,last_message",
       },
     );
     return RoomModel.fromJson(record.toJson());
