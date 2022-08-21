@@ -8,4 +8,5 @@ export 'src/model/preab_profile.dart';
 export 'src/model/room_model.dart';
 //
 export 'src/services/message_service.dart';
+export 'src/services/profile_service.dart';
 export 'src/services/room_service.dart';

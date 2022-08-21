@@ -2,7 +2,7 @@ import '../../preab.dart';
 
 extension RoomX on RoomModel {
   String get roomName {
-    return users.firstWhere((element) => element.id != PreabClient.profileId).id;
+    return userIdList.firstWhere((element) => element != PreabClient.profileId);
   }
 
   PreabProfile get otherUser {
@@ -15,6 +15,7 @@ class RoomModel {
     required this.id,
     required this.name,
     required this.users,
+    required this.userIdList,
     required this.lastMessage,
     this.updated,
     this.created,
@@ -25,6 +26,7 @@ class RoomModel {
   final DateTime? updated;
   final DateTime? created;
   final List<PreabProfile> users;
+  final List<String> userIdList;
   final String? lastMessage;
 
   RoomModel copyWith({
@@ -34,6 +36,7 @@ class RoomModel {
     DateTime? updated,
     DateTime? created,
     List<PreabProfile>? users,
+    List<String>? userIdList,
   }) {
     return RoomModel(
       id: id ?? this.id,
@@ -42,6 +45,7 @@ class RoomModel {
       created: created ?? this.created,
       users: users ?? this.users,
       lastMessage: lastMessage ?? this.lastMessage,
+      userIdList: userIdList ?? this.userIdList,
     );
   }
 
@@ -59,6 +63,7 @@ class RoomModel {
               ),
             ),
       lastMessage: json['last_message'] ?? "",
+      userIdList: json['users'] == null ? [] : List.from(json['users'].map((e) => e)),
     );
   }
 

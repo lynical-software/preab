@@ -4,6 +4,7 @@ import 'package:preab/preab.dart';
 import 'package:preab_example/src/auth/init.dart';
 import 'package:preab_example/src/auth/sign_in.dart';
 import 'package:preab_example/src/chat_room/chat_room_page.dart';
+import 'package:preab_example/src/search/search_user_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
@@ -11,7 +12,7 @@ class RoomController {
   final roomManager = FutureManager<List<RoomModel>>(
     futureFunction: () async {
       await init();
-      return PreabRoom.instance.getAllRooms();
+      return PreabRoomService.instance.getAllRooms();
     },
   );
 }
@@ -37,6 +38,12 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              SuraPageNavigator.push(context, const SearchUserPage());
+            },
+            icon: const Icon(Icons.search),
+          ),
           IconButton(
             onPressed: () {
               SharedPreferences.getInstance().then((value) => value.clear());
@@ -74,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.all(16),
         onTap: () async {
-          await PreabRoom.instance.createRoom("room1", "0War2IBvh13joKu");
+          await PreabRoomService.instance.createRoom("room1", "0War2IBvh13joKu");
           roomController.roomManager.refresh();
         },
         icon: const Icon(

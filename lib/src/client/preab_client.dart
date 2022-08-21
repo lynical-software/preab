@@ -43,7 +43,16 @@ class PreabClient {
       _profileId = user.profile!.id;
       _pocketBase!.authStore.save(token, user);
     } on ClientException catch (e) {
-      throw e.response['message'];
+      if (e.statusCode >= 500) {
+        throw PreabException(
+          PreabExceptionType.client,
+          "Unable to connect to server",
+        );
+      }
+      throw PreabException(
+        PreabExceptionType.client,
+        e.response['message'],
+      );
     }
   }
 }

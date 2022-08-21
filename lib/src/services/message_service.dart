@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:preab/preab.dart';
 import 'package:preab/src/constant/collection_name.dart';
 
-class PreabMessage {
+class PreabMessageService {
   final String roomId;
-  PreabMessage(this.roomId);
+  PreabMessageService(this.roomId);
 
   Future<List<ChatMessageModel>> getInitialMessage() async {
     var response = await PreabClient.client.records.getList(
@@ -33,7 +33,7 @@ class PreabMessage {
   }
 
   Future<ChatMessageModel> sendMessage(String message, {File? attachment}) async {
-    RoomModel roomModel = await PreabRoom.instance.getOneRoom(roomId);
+    RoomModel roomModel = await PreabRoomService.instance.getOneRoom(roomId);
     PreabProfile receiver = roomModel.users.firstWhere((element) => element.id != PreabClient.profileId);
     String? fileName;
     if (attachment != null) {

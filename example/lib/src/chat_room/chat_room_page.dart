@@ -21,7 +21,7 @@ class _ChatRoomState extends State<ChatRoom> with ManagerProviderMixin {
   FutureManager<List<ChatMessageModel>> messageManager = FutureManager();
 
   String get roomId => widget.room.id;
-  late PreabMessage preabMessage = PreabMessage(roomId);
+  late PreabMessageService preabMessage = PreabMessageService(roomId);
   late RoomModel roomModel;
 
   final TextEditingController messageTC = TextEditingController();
@@ -42,7 +42,7 @@ class _ChatRoomState extends State<ChatRoom> with ManagerProviderMixin {
 
   void fetchAndListen() async {
     await messageManager.execute(() async {
-      roomModel = await PreabRoom.instance.getOneRoom(roomId);
+      roomModel = await PreabRoomService.instance.getOneRoom(roomId);
       return preabMessage.getInitialMessage();
     });
     preabMessage.listen((message) {

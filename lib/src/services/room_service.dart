@@ -1,10 +1,10 @@
 import 'package:preab/preab.dart';
 import 'package:preab/src/constant/collection_name.dart';
 
-class PreabRoom {
-  PreabRoom._privateConstructor();
+class PreabRoomService {
+  PreabRoomService._privateConstructor();
 
-  static final PreabRoom instance = PreabRoom._privateConstructor();
+  static final PreabRoomService instance = PreabRoomService._privateConstructor();
 
   Future<RoomModel?> checkIfRoomExist(String profileId) async {
     var response = await PreabClient.client.records.getList(
@@ -57,7 +57,7 @@ class PreabRoom {
       roomCollection,
       roomId,
       query: {
-        "expand": "users,last_message",
+        "expand": "users",
       },
     );
     return RoomModel.fromJson(record.toJson());
